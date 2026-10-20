@@ -1,7 +1,29 @@
 
-import React from 'react'
-
+import React, { useState } from 'react'
+import axios from 'axios';
 function AddCourse() {
+   const [course,setCourse]=useState({})
+   const handleform=(e)=>{
+    e.preventDefault();
+    console.log(course);
+    postdata(course)
+        
+   }
+     
+  const postdata = async (data) => {
+    try {
+        const response = await axios.post(
+            "http://localhost:8080/student/saveData",
+            data
+        );
+
+        console.log("Data saved successfully:", response.data);
+        alert("Course added successfully!");
+
+    } catch (error) {
+        console.error("Error saving course:", error);
+    }
+};
   return (
     <div className="min-h-screen bg-gray-100 px-4 py-10">
 
@@ -11,7 +33,7 @@ function AddCourse() {
           Fill Course Details
         </h1>
 
-        <form className="space-y-5">
+        <form onSubmit={handleform} className="space-y-5">
 
           <div>
             <label
@@ -27,6 +49,9 @@ function AddCourse() {
               name="courseId"
               placeholder="Enter course ID"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+               onChange={(e)=>{
+                  setCourse({...course,id:e.target.value})
+               }}
             />
           </div>
 
@@ -44,6 +69,9 @@ function AddCourse() {
               name="courseTitle"
               placeholder="Enter course title"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              onChange={(e)=>{
+                setCourse({...course,course_title:e.target.value})
+              }}
             />
           </div>
 
@@ -61,6 +89,9 @@ function AddCourse() {
               rows="4"
               placeholder="Enter course description"
               className="w-full resize-y rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+              onChange={(e)=>{
+                setCourse({...course,cource_description:e.target.value})
+              }}
             />
           </div>
 

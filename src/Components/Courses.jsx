@@ -10,12 +10,15 @@ function Courses() {
     const getdata=async()=>{
      const response=await axios.get("http://localhost:8080/student/getData")
      setCourses(response.data)
-     console.log(response.data);
+     
      
     }
     useEffect(()=>{
        getdata()
     },[])
+    const  update=(id)=>{
+   setCourses(courses.filter((c)=>c.id!=id))
+    }
       
   return (
     <div>
@@ -23,7 +26,7 @@ function Courses() {
         {
            courses.length>0? courses.map((item)=><Course course={
             item
-           }/>):"No courses"
+           } update={update}/>):"No courses"
         }
     </div>
   )

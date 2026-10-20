@@ -1,7 +1,19 @@
 
 import React from 'react'
+import axios from 'axios'
+function Course({course,update}) {
 
-function Course({course}) {
+  const deleteCourse=(id)=>{
+axios.delete(`http://localhost:8080/student/delete/${id}`).then(
+  (response)=>{
+    alert("data deleted")
+    update(id)
+  },
+  (error)=>{
+    alert("somthing went wrong")
+  }
+)
+  }
   return (
     <div className=" align-content: center py-6 px-167 rounded-xl border border-gray-200 bg-white p-6 shadow-md transition hover:shadow-xl">
 
@@ -19,7 +31,9 @@ function Course({course}) {
         Update
         </button>
 
-        <button className="rounded-lg bg-red-600 px-5 py-2 font-medium text-white transition hover:bg-red-700">
+        <button onClick={()=>{
+          deleteCourse(course.course_id)
+        }} className="rounded-lg bg-red-600 px-5 py-2 font-medium text-white transition hover:bg-red-700">
          Delete
         </button>
 
